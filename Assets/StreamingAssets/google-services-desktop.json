@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "683552490492",
+    "firebase_url": "https://iqchellengedb-default-rtdb.firebaseio.com",
+    "project_id": "iqchellengedb",
+    "storage_bucket": "iqchellengedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683552490492:android:4b8c16fc51bd3add70e879",
+        "android_client_info": {
+          "package_name": "com.tugi.iqchellenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683552490492-l3nrltbtgbp5coek33cbiedsgllo94mi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu2qJ1qBT4VkCPi1Nz8VvsKWHN6HcMJWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683552490492-l3nrltbtgbp5coek33cbiedsgllo94mi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "683552490492-e9bb64hhvn3j6l82rjrcn2snc99e70po.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tugi.iqchellenge.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
