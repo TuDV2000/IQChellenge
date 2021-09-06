@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager ins;
+    public DialogResult dialogResult;
     public Text questionText;
     public AnswerButton[] answerButtons;
 

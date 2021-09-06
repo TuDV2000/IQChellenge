@@ -124,7 +124,9 @@ public class QuestionManager : MonoBehaviour
         {
             if (++rigrtAnswerCount == 5)
             {
-                Debug.Log("Hiện thông báo kết thúc!! Chiến thắng!!");
+                TimeController.ins.enabled = false;
+                UIManager.ins.dialogResult.SetDialogContent("Xin chúc mừng! Bạn đã chiến thắng!");
+                UIManager.ins.dialogResult.Show(true);
             }
             else
             {
@@ -134,7 +136,9 @@ public class QuestionManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Hiện thông báo kết thúc!! Bạn đã sai! Trò chơi kết thúc!");
+            TimeController.ins.enabled = false;
+            UIManager.ins.dialogResult.SetDialogContent("Bạn đã sai! Trò chơi kết thúc!");
+            UIManager.ins.dialogResult.Show(true);
         }
     }
 
