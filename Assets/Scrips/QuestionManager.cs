@@ -13,6 +13,7 @@ public class QuestionManager : MonoBehaviour
     public List<QuestionData> listQuestions = new List<QuestionData>();
     DatabaseReference mDatabaseref;
 
+
     private void Awake() {
         MakeSingleton();
         mDatabaseref = FirebaseDatabase.DefaultInstance.RootReference;
@@ -21,7 +22,7 @@ public class QuestionManager : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     /*
@@ -122,22 +123,30 @@ public class QuestionManager : MonoBehaviour
     {
         if (answerButton.btnComp.tag == "RightAnswer")
         {
-            if (++rigrtAnswerCount == 5)
+            
+            GameController.ins.score += 100;
+            if (++rigrtAnswerCount == MenuLevelManager.Ins.countQuestionLevel)
             {
-                TimeController.ins.enabled = false;
-                UIManager.ins.dialogResult.SetDialogContent("Xin chúc mừng! Bạn đã chiến thắng!");
+                AudioController.ins.PlayWinSound();
+                AudioController.ins.StopMusic();
+                Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
+                UIManager.ins.dialogResult.SetDialogContent("Xin chúc mừng! Bạn đã chiến thắng! Điểm " +
+                    GameController.ins.score + "!");
                 UIManager.ins.dialogResult.Show(true);
             }
             else
             {
+                AudioController.ins.PlayRightSound();
                 CreateQuestion();
             }
-
         }
         else
         {
-            TimeController.ins.enabled = false;
-            UIManager.ins.dialogResult.SetDialogContent("Bạn đã sai! Trò chơi kết thúc!");
+            AudioController.ins.StopMusic();
+            AudioController.ins.PlayLoseSound();
+            Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
+            UIManager.ins.dialogResult.SetDialogContent("Bạn đã sai! Trò chơi kết thúc! Điểm: " 
+                + GameController.ins.score);
             UIManager.ins.dialogResult.Show(true);
         }
     }

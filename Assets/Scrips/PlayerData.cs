@@ -6,11 +6,5 @@ using UnityEngine;
 public class PlayerData
 {
     public string name;
-    public string email;
-
-    public PlayerData(string name, string email)
-    {
-        this.name = name;
-        this.email = email;
-    }
+    public float score = 0;
 }

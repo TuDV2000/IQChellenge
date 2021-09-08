@@ -7,11 +7,17 @@ public class TimeController : MonoBehaviour
 {
     public static TimeController ins;
     public Text timeText;
-    public float time;
+    
+    float time;
 
     private void Awake()
     {
         MakeSingleton();
+    }
+
+    private void Start()
+    {
+        time = MenuLevelManager.Ins.timeLevel;
     }
 
     /*
