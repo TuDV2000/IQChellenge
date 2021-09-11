@@ -8,7 +8,7 @@ public class TimeController : MonoBehaviour
     public static TimeController ins;
     public Text timeText;
     
-    float time;
+    public float time;
 
     private void Awake()
     {
@@ -39,12 +39,14 @@ public class TimeController : MonoBehaviour
         {
             time -= Time.deltaTime;
             SetTimeText(time);
+            //Debug.Log(time);
         }
         else
         {
             enabled = false;
-            UIManager.ins.dialogResult.SetDialogContent("Bạn đã hết thời gian! Trò chơi kết thúc!");
-            UIManager.ins.dialogResult.Show(true);
+            Debug.Log("ban da het thoi gian");
+            //UIManager.ins.dialogResult.SetDialogContent("Bạn đã hết thời gian! Trò chơi kết thúc!");
+            //UIManager.ins.dialogResult.Show(true);
         }
     }
 

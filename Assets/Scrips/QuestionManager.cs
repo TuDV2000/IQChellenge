@@ -8,8 +8,8 @@ using Firebase.Auth;
 
 public class QuestionManager : MonoBehaviour
 {
-    int rigrtAnswerCount = 0;
-    public static QuestionManager ins;
+    public static QuestionManager Ins;
+    public int rigrtAnswerCount = 0;    
     public List<QuestionData> listQuestions = new List<QuestionData>();
     DatabaseReference mDatabaseref;
 
@@ -84,10 +84,10 @@ public class QuestionManager : MonoBehaviour
 
         if (qs != null)
         {
-            UIManager.ins.SetQuestionText(qs.content);
-            UIManager.ins.ShuffleAnswer();
+            UIManager.Ins.SetQuestionText(qs.content);
+            UIManager.Ins.ShuffleAnswer();
 
-            var temp = UIManager.ins.answerButtons;
+            var temp = UIManager.Ins.answerButtons;
 
             if (temp != null)
             {
@@ -127,33 +127,35 @@ public class QuestionManager : MonoBehaviour
             GameController.ins.score += 100;
             if (++rigrtAnswerCount == MenuLevelManager.Ins.countQuestionLevel)
             {
-                AudioController.ins.PlayWinSound();
-                AudioController.ins.StopMusic();
+                AudioController.Ins.PlayWinSound();
+                AudioController.Ins.StopMusic();
                 Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
-                UIManager.ins.dialogResult.SetDialogContent("Xin chúc mừng! Bạn đã chiến thắng! Điểm " +
-                    GameController.ins.score + "!");
-                UIManager.ins.dialogResult.Show(true);
+                Debug.Log("Hoan thanh!!");
+                //UIManager.Ins.dialogResult.SetDialogContent("Xin chúc mừng! Bạn đã chiến thắng! Điểm " +
+                //GameController.ins.score + "!");
+                //UIManager.Ins.dialogResult.Show(true);
             }
             else
             {
-                AudioController.ins.PlayRightSound();
+                AudioController.Ins.PlayRightSound();
                 CreateQuestion();
             }
         }
         else
         {
-            AudioController.ins.StopMusic();
-            AudioController.ins.PlayLoseSound();
+            AudioController.Ins.StopMusic();
+            AudioController.Ins.PlayLoseSound();
             Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
-            UIManager.ins.dialogResult.SetDialogContent("Bạn đã sai! Trò chơi kết thúc! Điểm: " 
-                + GameController.ins.score);
-            UIManager.ins.dialogResult.Show(true);
+            Debug.Log("Sai! Ket thuc!");
+            //UIManager.ins.dialogResult.SetDialogContent("Bạn đã sai! Trò chơi kết thúc! Điểm: " 
+                //+ GameController.ins.score);
+            //UIManager.ins.dialogResult.Show(true);
         }
     }
 
     public void MakeSingleton() {
-        if (ins == null) {
-            ins = this;
+        if (Ins == null) {
+            Ins = this;
         } else {
             Destroy(gameObject);
         }

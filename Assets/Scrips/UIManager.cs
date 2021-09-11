@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager ins;
+    public static UIManager Ins;
+
     public DialogResult dialogResult;
     public Text questionText;
     public AnswerButton[] answerButtons;
+
+    public GameObject qAP; //Question-answer-pause
 
     private void Awake()
     {
@@ -49,8 +52,8 @@ public class UIManager : MonoBehaviour
     }
 
     public void MakeSingleton() {
-        if (ins == null) {
-            ins = this;
+        if (Ins == null) {
+            Ins = this;
         } else {
             Destroy(gameObject);
         }

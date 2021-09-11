@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class AudioController : MonoBehaviour
 {
-    public static AudioController ins;
-
-    [Range(0, 1)]
-    public float soundVolume = 1f;
-    [Range(0, 1)]
-    public float musicVolume = 0.5f;
+    public static AudioController Ins;
 
     public AudioSource musicAus;
     public AudioSource soundAus;
@@ -30,12 +27,6 @@ public class AudioController : MonoBehaviour
         PlayBackgroundMusic();
     }
 
-    private void Update()
-    {
-        soundAus.volume = soundVolume;
-        musicAus.volume = musicVolume;
-    }
-
     public void PlayBackgroundMusic()
     {
         if (musicAus && backgroundMusic != null && backgroundMusic.Length > 0)
@@ -44,7 +35,6 @@ public class AudioController : MonoBehaviour
 
             if (backgroundMusic[ranIndex])
             {
-                musicAus.volume = musicVolume;
                 musicAus.clip = backgroundMusic[ranIndex];
                 musicAus.Play();
             }
@@ -55,7 +45,6 @@ public class AudioController : MonoBehaviour
     {
         if (soundAus && sound)
         {
-            soundAus.volume = soundVolume;
             soundAus.PlayOneShot(sound);
         }
     }
@@ -85,9 +74,9 @@ public class AudioController : MonoBehaviour
 
     public void MakeSingleton()
     {
-        if (ins == null)
+        if (Ins == null)
         {
-            ins = this;
+            Ins = this;
         }
         else
         {

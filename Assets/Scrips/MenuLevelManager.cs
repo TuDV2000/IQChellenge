@@ -9,39 +9,47 @@ public class MenuLevelManager : MonoBehaviour
     public float timeLevel;
     public float countQuestionLevel;
 
-
     private void Awake()
     {
         MakeSingleton();
     }
 
+    private void Start()
+    {
+        TimeController.ins.enabled = false;        
+    }
+
     public void Level()
     {
         string level = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log(level);
+
         switch (level)
         {
-            case "LevelEasyBtuton":
+            case "LevelEasyButton":
                 timeLevel = 300;
-                countQuestionLevel = 10;
-                
+                countQuestionLevel = 10;           
                 break;
-            case "LevelNomalBtuton":
+            case "LevelNomalButton":
                 timeLevel = 240;
                 countQuestionLevel = 10;
                 break;
-            case "LevelDifficultBtuton":
+            case "LevelDifficultButton":
                 timeLevel = 180;
                 countQuestionLevel = 10;
                 break;
         }
 
-        SceneManager.LoadScene("GamePlay");
+        gameObject.SetActive(false);
+        UIManager.Ins.qAP.SetActive(true);
+
+        Time.timeScale = 1f;
+        Invoke("Load", 1.5f);
     }
 
-    public void GoBackHome()
+    void Load()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        QuestionManager.Ins.CreateQuestion();
+        TimeController.ins.enabled = true;
     }
 
     public void MakeSingleton()

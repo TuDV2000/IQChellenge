@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="357041bd-1ae7-4581-a913-bcb38cbb39bf" name="Default Changelist" comment="delete project" />
+    <list default="true" id="357041bd-1ae7-4581-a913-bcb38cbb39bf" name="Default Changelist" comment="delete project">
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GamePlay.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GamePlay.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scrips/AudioController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scrips/AudioController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scrips/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scrips/GameController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scrips/HomeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scrips/HomeManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scrips/QuestionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scrips/QuestionManager.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
