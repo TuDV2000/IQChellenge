@@ -1,38 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class DialogOption : MonoBehaviour
+public class DialogEndGame : MonoBehaviour
 {
-    public static DialogOption Ins;
+    public static DialogEndGame Ins;
+    public Text scoreText;
 
     private void Awake()
     {
-        MakeSingleton();    
+        MakeSingleton();
     }
 
     public void Show()
     {
         Time.timeScale = 0f;
+        scoreText.text = GameController.ins.score.ToString();
         gameObject.SetActive(true);
-    }
-
-    public void DoneSetting()
-    {
-        gameObject.SetActive(false);
     }
 
     public void GoBackHome()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-    }
-
-    public void Resume()
-    {
-        gameObject.SetActive(false);
-        Time.timeScale = 1f;
     }
 
     public void PlayAgain()

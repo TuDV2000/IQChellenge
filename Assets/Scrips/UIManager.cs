@@ -8,20 +8,16 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Ins;
 
-    public DialogResult dialogResult;
     public Text questionText;
     public AnswerButton[] answerButtons;
 
     public GameObject qAP; //Question-answer-pause
+    public DialogEndGame dialogEndGame;
+    public DialogOption dialogOption;
 
     private void Awake()
     {
         MakeSingleton();
-    }
-
-    private void Start()
-    {
-        
     }
 
     public void SetQuestionText(string content) {
@@ -49,6 +45,15 @@ public class UIManager : MonoBehaviour
                 answerButtons[ranIndex].btnComp.tag = "RightAnswer";
             }
         }
+    }
+
+    public void ShowDialogEndGame()
+    {
+        dialogEndGame.Show();       
+    }
+    public void ShowDialogOption()
+    {
+        dialogOption.Show();
     }
 
     public void MakeSingleton() {

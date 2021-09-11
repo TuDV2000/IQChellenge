@@ -16,11 +16,6 @@ public class GameController : MonoBehaviour
         MakeSingleton();
     }
 
-    private void Start()
-    {
-        
-    }
-
     public void MakeSingleton()
     {
         if (ins == null)
