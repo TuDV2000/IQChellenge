@@ -7,6 +7,7 @@ using Firebase;
 using Firebase.Database;
 
 public class GameController : MonoBehaviour
+<<<<<<< HEAD
 {   
     private void Start()
     {
@@ -25,5 +26,31 @@ public class GameController : MonoBehaviour
 
     public void Replay() {
         SceneManager.LoadScene("GamePlay");
+=======
+{
+    public static GameController ins;
+    public float score = 0;
+
+    private void Awake()
+    {
+        MakeSingleton();
+    }
+
+    private void Start()
+    {
+        
+    }
+
+    public void MakeSingleton()
+    {
+        if (ins == null)
+        {
+            ins = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+>>>>>>> tu
     }
 }

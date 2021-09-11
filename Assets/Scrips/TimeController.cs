@@ -7,6 +7,10 @@ public class TimeController : MonoBehaviour
 {
     public static TimeController ins;
     public Text timeText;
+<<<<<<< HEAD
+=======
+    
+>>>>>>> tu
     public float time;
 
     private void Awake()
@@ -14,6 +18,14 @@ public class TimeController : MonoBehaviour
         MakeSingleton();
     }
 
+<<<<<<< HEAD
+=======
+    private void Start()
+    {
+        time = MenuLevelManager.Ins.timeLevel;
+    }
+
+>>>>>>> tu
     /*
      * Hàm format time text được hiển thị lên giao diện
      */
@@ -33,12 +45,22 @@ public class TimeController : MonoBehaviour
         {
             time -= Time.deltaTime;
             SetTimeText(time);
+<<<<<<< HEAD
+=======
+            //Debug.Log(time);
+>>>>>>> tu
         }
         else
         {
             enabled = false;
+<<<<<<< HEAD
             UIManager.ins.dialogResult.SetDialogContent("Bạn đã hết thời gian! Trò chơi kết thúc!");
             UIManager.ins.dialogResult.Show(true);
+=======
+            Debug.Log("ban da het thoi gian");
+            //UIManager.ins.dialogResult.SetDialogContent("Bạn đã hết thời gian! Trò chơi kết thúc!");
+            //UIManager.ins.dialogResult.Show(true);
+>>>>>>> tu
         }
     }
 

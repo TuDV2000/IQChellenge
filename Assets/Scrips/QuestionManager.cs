@@ -8,11 +8,20 @@ using Firebase.Auth;
 
 public class QuestionManager : MonoBehaviour
 {
+<<<<<<< HEAD
     int rigrtAnswerCount = 0;
     public static QuestionManager ins;
     public List<QuestionData> listQuestions = new List<QuestionData>();
     DatabaseReference mDatabaseref;
 
+=======
+    public static QuestionManager Ins;
+    public int rigrtAnswerCount = 0;    
+    public List<QuestionData> listQuestions = new List<QuestionData>();
+    DatabaseReference mDatabaseref;
+
+
+>>>>>>> tu
     private void Awake() {
         MakeSingleton();
         mDatabaseref = FirebaseDatabase.DefaultInstance.RootReference;
@@ -21,7 +30,11 @@ public class QuestionManager : MonoBehaviour
 
     private void Start()
     {
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> tu
     }
 
     /*
@@ -83,10 +96,17 @@ public class QuestionManager : MonoBehaviour
 
         if (qs != null)
         {
+<<<<<<< HEAD
             UIManager.ins.SetQuestionText(qs.content);
             UIManager.ins.ShuffleAnswer();
 
             var temp = UIManager.ins.answerButtons;
+=======
+            UIManager.Ins.SetQuestionText(qs.content);
+            UIManager.Ins.ShuffleAnswer();
+
+            var temp = UIManager.Ins.answerButtons;
+>>>>>>> tu
 
             if (temp != null)
             {
@@ -122,6 +142,7 @@ public class QuestionManager : MonoBehaviour
     {
         if (answerButton.btnComp.tag == "RightAnswer")
         {
+<<<<<<< HEAD
             if (++rigrtAnswerCount == 5)
             {
                 TimeController.ins.enabled = false;
@@ -139,12 +160,46 @@ public class QuestionManager : MonoBehaviour
             TimeController.ins.enabled = false;
             UIManager.ins.dialogResult.SetDialogContent("Bạn đã sai! Trò chơi kết thúc!");
             UIManager.ins.dialogResult.Show(true);
+=======
+            
+            GameController.ins.score += 100;
+            if (++rigrtAnswerCount == MenuLevelManager.Ins.countQuestionLevel)
+            {
+                AudioController.Ins.PlayWinSound();
+                AudioController.Ins.StopMusic();
+                Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
+                Debug.Log("Hoan thanh!!");
+                //UIManager.Ins.dialogResult.SetDialogContent("Xin chúc mừng! Bạn đã chiến thắng! Điểm " +
+                //GameController.ins.score + "!");
+                //UIManager.Ins.dialogResult.Show(true);
+            }
+            else
+            {
+                AudioController.Ins.PlayRightSound();
+                CreateQuestion();
+            }
+        }
+        else
+        {
+            AudioController.Ins.StopMusic();
+            AudioController.Ins.PlayLoseSound();
+            Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
+            Debug.Log("Sai! Ket thuc!");
+            //UIManager.ins.dialogResult.SetDialogContent("Bạn đã sai! Trò chơi kết thúc! Điểm: " 
+                //+ GameController.ins.score);
+            //UIManager.ins.dialogResult.Show(true);
+>>>>>>> tu
         }
     }
 
     public void MakeSingleton() {
+<<<<<<< HEAD
         if (ins == null) {
             ins = this;
+=======
+        if (Ins == null) {
+            Ins = this;
+>>>>>>> tu
         } else {
             Destroy(gameObject);
         }
