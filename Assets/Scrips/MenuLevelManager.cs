@@ -16,28 +16,28 @@ public class MenuLevelManager : MonoBehaviour
 
     private void Start()
     {
-        TimeController.ins.enabled = false;        
+        TimeController.ins.enabled = false;
     }
 
-    public void Level()
+    public void Mode()
     {
-        string level = EventSystem.current.currentSelectedGameObject.name;
+        //string level = EventSystem.current.currentSelectedGameObject.name;
 
-        switch (level)
-        {
-            case "LevelEasyButton":
-                timeLevel = 300;
-                countQuestionLevel = 10;           
-                break;
-            case "LevelNomalButton":
-                timeLevel = 240;
-                countQuestionLevel = 10;
-                break;
-            case "LevelDifficultButton":
-                timeLevel = 180;
-                countQuestionLevel = 10;
-                break;
-        }
+        //switch (level)
+        //{
+        //    case "LevelEasyButton":
+        //        timeLevel = 300;
+        //        countQuestionLevel = 10;           
+        //        break;
+        //    case "LevelNomalButton":
+        //        timeLevel = 240;
+        //        countQuestionLevel = 10;
+        //        break;
+        //    case "LevelDifficultButton":
+        //        timeLevel = 180;
+        //        countQuestionLevel = 10;
+        //        break;
+        //}
 
         gameObject.SetActive(false);
         UIManager.Ins.qAP.SetActive(true);

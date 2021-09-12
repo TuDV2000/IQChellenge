@@ -20,7 +20,6 @@ public class SettingSound : MonoBehaviour
         {
             float currentVolume;
             audioMixer.GetFloat("volume", out currentVolume);
-            Debug.Log("currentVolume: " + currentVolume);
             slider.value = currentVolume;
         }
     }

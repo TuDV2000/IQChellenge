@@ -12,9 +12,9 @@ public class HomeManager : MonoBehaviour
         MakeSingleton();
     }
 
-    private void Start()
+    public void Show()
     {
-        AudioController.Ins.PlayBackgroundMusic();
+        gameObject.SetActive(true);
     }
 
     public void PlayGame()
