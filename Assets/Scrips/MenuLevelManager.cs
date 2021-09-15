@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 public class MenuLevelManager : MonoBehaviour
 {
     public static MenuLevelManager Ins;
-    public float timeLevel;
-    public float countQuestionLevel;
 
     private void Awake()
     {
@@ -21,29 +19,11 @@ public class MenuLevelManager : MonoBehaviour
 
     public void Mode()
     {
-        //string level = EventSystem.current.currentSelectedGameObject.name;
-
-        //switch (level)
-        //{
-        //    case "LevelEasyButton":
-        //        timeLevel = 300;
-        //        countQuestionLevel = 10;           
-        //        break;
-        //    case "LevelNomalButton":
-        //        timeLevel = 240;
-        //        countQuestionLevel = 10;
-        //        break;
-        //    case "LevelDifficultButton":
-        //        timeLevel = 180;
-        //        countQuestionLevel = 10;
-        //        break;
-        //}
-
         gameObject.SetActive(false);
         UIManager.Ins.qAP.SetActive(true);
-
+        UIManager.Ins.pauseButton.gameObject.SetActive(true);
         Time.timeScale = 1f;
-        Invoke("Load", 1.5f);
+        Invoke("Load", 2f);
     }
 
     void Load()

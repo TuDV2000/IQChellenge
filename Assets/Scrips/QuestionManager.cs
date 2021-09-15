@@ -9,8 +9,12 @@ using Firebase.Auth;
 public class QuestionManager : MonoBehaviour
 {
     public static QuestionManager Ins;
-    public int rigrtAnswerCount = 0;    
+    public bool isNewRecord = false;
+
+    int rigrtAnswerCount = 0;
     public List<QuestionData> listQuestions = new List<QuestionData>();
+    int countQuestions = 0;
+
     DatabaseReference mDatabaseref;
 
     private void Awake() {
@@ -40,6 +44,7 @@ public class QuestionManager : MonoBehaviour
             }
             listQuestions.Add(q);
         }
+        countQuestions = listQuestions.Count;
     }
 
     /*
@@ -49,7 +54,7 @@ public class QuestionManager : MonoBehaviour
      */
     public QuestionData GetRandomQuestion() {
         QuestionData curQuestion = new QuestionData();
-       
+        
         if (listQuestions != null && listQuestions.Count > 0) {
             int ranIndex = Random.Range(0, listQuestions.Count);
 
@@ -118,42 +123,52 @@ public class QuestionManager : MonoBehaviour
         if (answerButton.btnComp.tag == "RightAnswer")
         {
             GameController.ins.score += 10;
-            if (++rigrtAnswerCount == 19)
+
+            /*-----Luu thong tin gameplay-----------*/
+            if (PlayerPrefs.GetFloat("score") == 0 && PlayerPrefs.GetFloat("timePlay") == 0)
+            {
+                PlayerPrefs.SetFloat("score", GameController.ins.score);
+                PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
+                isNewRecord = true;
+                //Debug.Log("begin score: " + PlayerPrefs.GetFloat("score"));
+                //Debug.Log("begin timePlay: " + PlayerPrefs.GetFloat("timePlay"));
+            }
+            else
+            {
+                if (GameController.ins.score > PlayerPrefs.GetFloat("score"))
+                {
+                    //Debug.Log("score: after > before");
+                    //Debug.Log("Before score: " + PlayerPrefs.GetFloat("score"));
+                    //Debug.Log("After score: " + GameController.ins.score);
+                    //Debug.Log("Before score: " + PlayerPrefs.GetFloat("timePlay"));
+                    //Debug.Log("After score: " + TimeController.ins.time);
+                    PlayerPrefs.SetFloat("score", GameController.ins.score);
+                    PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
+                    isNewRecord = true;
+                }
+                else if (GameController.ins.score == PlayerPrefs.GetFloat("score"))
+                {
+                    //Debug.Log("score: after == before");
+                    //Debug.Log("Before score: " + PlayerPrefs.GetFloat("score"));
+                    //Debug.Log("After score: " + GameController.ins.score);
+                    if (TimeController.ins.time < PlayerPrefs.GetFloat("timePlay"))
+                    {
+                        //Debug.Log("Before score: " + PlayerPrefs.GetFloat("timePlay"));
+                        //Debug.Log("After score: " + TimeController.ins.time);
+                        PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
+                        isNewRecord = true;
+                    }
+                }
+            } 
+            PlayerPrefs.Save();
+            /*--------------------------------------------*/
+
+            if (++rigrtAnswerCount > countQuestions)
             {
                 AudioController.Ins.PlayWinSound();
                 AudioController.Ins.StopMusic();
                 Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
-
-                /*-----Luu thong tin gameplay-----------*/
-                //if (PlayerPrefs.GetFloat("score") == 0)
-                //{
-                //    PlayerPrefs.SetFloat("score", GameController.ins.score);
-                //}
-                //else
-                //{
-                //    if (GameController.ins.score > PlayerPrefs.GetFloat("score"))
-                //        PlayerPrefs.SetFloat("score", GameController.ins.score);
-                //}
-                //if (PlayerPrefs.GetFloat("timePlay") == 0)
-                //{
-                //    PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
-                //}
-                //else
-                //{
-                //    if (TimeController.ins.time > PlayerPrefs.GetFloat("timePlay"))
-                //        PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
-                //}
-                //PlayerPrefs.Save();
-                //Debug.Log("score: " + PlayerPrefs.GetFloat("score"));
-                //Debug.Log("time play: " + PlayerPrefs.GetFloat("timePlay"));
-                /*--------------------------------------------*/
-
-                //float timeToDisplay = TimeController.ins.time;
-                //float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-                //float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-                //string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
-
-                //Debug.Log("Finish: " + timeString + " with score = " + GameController.ins.score);
+                                
                 UIManager.Ins.ShowDialogEndGame();
             }
             else
@@ -167,37 +182,6 @@ public class QuestionManager : MonoBehaviour
             AudioController.Ins.StopMusic();
             AudioController.Ins.PlayLoseSound();
             Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
-
-            /*-----Luu thong tin gameplay-----------*/
-            //if (PlayerPrefs.GetFloat("score") == 0)
-            //{
-            //    PlayerPrefs.SetFloat("score", GameController.ins.score);
-            //}
-            //else
-            //{
-            //    if (GameController.ins.score > PlayerPrefs.GetFloat("score"))
-            //        PlayerPrefs.SetFloat("score", GameController.ins.score);
-            //}
-            //if (PlayerPrefs.GetFloat("timePlay") == 0)
-            //{
-            //    PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
-            //}
-            //else
-            //{
-            //    if (TimeController.ins.time > PlayerPrefs.GetFloat("timePlay"))
-            //        PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
-            //}
-            //PlayerPrefs.Save();
-            //Debug.Log("score: " + PlayerPrefs.GetFloat("score"));
-            //Debug.Log("time play: " + PlayerPrefs.GetFloat("timePlay"));
-            /*--------------------------------------------*/
-
-            //float timeToDisplay = TimeController.ins.time;
-            //float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-            //float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-            //string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
-
-            //Debug.Log("Fail: " + timeString + " with score = " + GameController.ins.score);
             UIManager.Ins.ShowDialogEndGame();
         }
     }

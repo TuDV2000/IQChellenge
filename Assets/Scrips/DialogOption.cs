@@ -22,6 +22,7 @@ public class DialogOption : MonoBehaviour
     public void DoneSetting()
     {
         gameObject.SetActive(false);
+        UIManager.Ins.pauseButton.gameObject.SetActive(true);
     }
 
     public void GoBackHome()
@@ -33,6 +34,7 @@ public class DialogOption : MonoBehaviour
     {
         gameObject.SetActive(false);
         Time.timeScale = 1f;
+        UIManager.Ins.pauseButton.gameObject.SetActive(true);
     }
 
     public void PlayAgain()

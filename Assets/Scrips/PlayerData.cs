@@ -1,24 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerData
+public class PlayerData : IComparable<PlayerData>
 {
     public string name;
-    public float score;
-    public float timePlay;
+    public string score;
+    public string timePlay;
 
     public PlayerData() { }
 
     public PlayerData(string name)
     {
         this.name = name;
-        this.score = 0;
-        this.timePlay = 0;
     }
 
-    public PlayerData(string name, float score, float timePlay)
+    public PlayerData(string name, string score, string timePlay)
     {
         this.name = name;
         this.score = score;
@@ -34,5 +33,22 @@ public class PlayerData
         }
 
         return false;
+    }
+
+    public int CompareTo(PlayerData other)
+    {
+        if (float.Parse(this.score) < float.Parse(other.score))
+            return 1;
+        else if (float.Parse(this.score) > float.Parse(other.score))
+            return -1;
+        else
+        {
+            if (float.Parse(this.timePlay) > float.Parse(other.timePlay))
+                return 1;
+            else if (float.Parse(this.timePlay) < float.Parse(other.timePlay))
+                return -1;
+            else
+                return 0;
+        }
     }
 }

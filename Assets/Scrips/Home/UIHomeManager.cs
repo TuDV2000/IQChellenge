@@ -21,6 +21,12 @@ public class UIHomeManager : MonoBehaviour
             homeManager.Show();
     }
 
+    public void ClearPlayerPref()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
+
     public void MakeSingleton()
     {
         if (Ins == null)
