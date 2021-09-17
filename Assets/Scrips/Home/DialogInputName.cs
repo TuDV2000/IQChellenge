@@ -11,30 +11,11 @@ public class DialogInputName : MonoBehaviour
     public string playerName;
     public Text placeh;
     public Text nameText;
-    public GameObject notificationText;
-
-    DatabaseReference mDatabaseRef;
-    List<PlayerData> list = new List<PlayerData>();
+    public Text notificationText;
 
     private void Awake()
     {
         MakeSingleton();
-        mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-        mDatabaseRef.ValueChanged += LoadPlayerDatas;
-    }
-
-    private void LoadPlayerDatas(object sender, ValueChangedEventArgs e)
-    {
-        if (e.DatabaseError != null)
-        {
-            Debug.LogError(e.DatabaseError.Message);
-            return;
-        }
-        foreach (DataSnapshot dsPlayers in e.Snapshot.Child("players").Children)
-        {
-            Debug.Log("in:" + dsPlayers.Child("name").Value);
-            list.Add(new PlayerData(dsPlayers.Child("name").Value.ToString()));
-        }
     }
 
     public void Show()
@@ -45,9 +26,9 @@ public class DialogInputName : MonoBehaviour
     public void SetPlayerName()
     {
         PlayerData player = new PlayerData(nameText.text);
-        if (player.CheckPlayer(list))
+        if (player.CheckPlayer(PlayerManager.Ins.listPlayer))
         {
-            notificationText.SetActive(true);
+            notificationText.gameObject.SetActive(true);
         }
         else
         {
@@ -56,6 +37,11 @@ public class DialogInputName : MonoBehaviour
             gameObject.SetActive(false);
             UIHomeManager.Ins.homeManager.Show();
         }
+    }
+
+    public void HideNotification()
+    {
+        notificationText.gameObject.SetActive(false);
     }
 
     public void MakeSingleton()

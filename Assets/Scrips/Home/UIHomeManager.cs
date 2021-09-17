@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Firebase.Database;
 
 public class UIHomeManager : MonoBehaviour
 {
     public static UIHomeManager Ins;
+
     public DialogInputName dialogInputName;
     public HomeManager homeManager;
+    public DatabaseReference mDatabaseRef;
 
     private void Awake()
     {
         MakeSingleton();
+        mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
     private void Start()

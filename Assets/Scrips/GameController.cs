@@ -8,9 +8,9 @@ using Firebase.Database;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController ins;
-    public float score = 0;
+    public static GameController Ins;
 
+    public float score = 0;
     public DatabaseReference mDatabaseRef;
 
     private void Awake()
@@ -21,9 +21,9 @@ public class GameController : MonoBehaviour
 
     public void MakeSingleton()
     {
-        if (ins == null)
+        if (Ins == null)
         {
-            ins = this;
+            Ins = this;
         }
         else
         {

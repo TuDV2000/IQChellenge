@@ -15,24 +15,24 @@ public class DialogRank : MonoBehaviour
     {
         rankLists = listRankContent.GetComponentsInChildren<RankItem>();
 
-        if (DialogEndGame.Ins.listPlayerDatas.Count > 0)
+        if (PlayerManager.Ins.listPlayer.Count > 0)
         {
-            DialogEndGame.Ins.listPlayerDatas.Sort();
+            PlayerManager.Ins.listPlayer.Sort();
 
             int max = rankLists.Length;
 
-            for (int i = 0; i < DialogEndGame.Ins.listPlayerDatas.Count; i++)
+            for (int i = 0; i < PlayerManager.Ins.listPlayer.Count; i++)
             {
                 if (i < max)
                 {
-                    rankLists[i].SetText(i + 1, DialogEndGame.Ins.listPlayerDatas[i].name,
-                        DialogEndGame.Ins.listPlayerDatas[i].score);
+                    rankLists[i].SetText(i + 1, PlayerManager.Ins.listPlayer[i].name,
+                        PlayerManager.Ins.listPlayer[i].score);
                 }
 
-                if (DialogEndGame.Ins.listPlayerDatas[i].name.Equals(PlayerPrefs.GetString("name")))
+                if (PlayerManager.Ins.listPlayer[i].name.Equals(PlayerPrefs.GetString("name")))
                 {
-                    currentRank.SetText(i + 1, DialogEndGame.Ins.listPlayerDatas[i].name,
-                        DialogEndGame.Ins.listPlayerDatas[i].score);
+                    currentRank.SetText(i + 1, PlayerManager.Ins.listPlayer[i].name,
+                        PlayerManager.Ins.listPlayer[i].score);
                     if (i >= max)
                         break;
                 }

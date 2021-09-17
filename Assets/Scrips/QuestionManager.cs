@@ -4,23 +4,28 @@ using UnityEngine;
 using System.Linq;
 using Firebase;
 using Firebase.Database;
-using Firebase.Auth;
 
 public class QuestionManager : MonoBehaviour
 {
     public static QuestionManager Ins;
-    public bool isNewRecord = false;
 
-    int rigrtAnswerCount = 0;
+    public bool isNewRecord = false;
     public List<QuestionData> listQuestions = new List<QuestionData>();
+
+    int rigrtAnswerCount = 0;    
     int countQuestions = 0;
 
-    DatabaseReference mDatabaseref;
-
-    private void Awake() {
+    private void Awake() 
+    {
         MakeSingleton();
-        mDatabaseref = FirebaseDatabase.DefaultInstance.RootReference;
-        mDatabaseref.ValueChanged += LoadQuestionDatas;
+    }
+
+    private void Start()
+    {
+        if (listQuestions.Count == 0) 
+            GameController.Ins.mDatabaseRef.ValueChanged += LoadQuestionDatas;
+        else
+            GameController.Ins.mDatabaseRef.ValueChanged -= LoadQuestionDatas;
     }
 
     /*
@@ -83,8 +88,8 @@ public class QuestionManager : MonoBehaviour
 
         if (qs != null)
         {
-            UIManager.Ins.SetQuestionText(qs.content);
-            UIManager.Ins.ShuffleAnswer();
+            SetQuestionText(qs.content);
+            ShuffleAnswer();
 
             var temp = UIManager.Ins.answerButtons;
 
@@ -116,46 +121,68 @@ public class QuestionManager : MonoBehaviour
     }
 
     /*
+     * Hàm trộn câu trả lời.
+     * 1) Đầu tiên gán tag của tất cả các button answer = "Untagged".
+     * 2) Sau đó ta chọn ngẫu nhiên 1 button answer để gán tag = "RightAnswer".
+     */
+    public void ShuffleAnswer()
+    {
+        if (UIManager.Ins.answerButtons != null && UIManager.Ins.answerButtons.Length > 0)
+        {
+            for (int i = 0; i < UIManager.Ins.answerButtons.Length; i++)
+            {
+                if (UIManager.Ins.answerButtons[i] != null)
+                {
+                    UIManager.Ins.answerButtons[i].btnComp.tag = "Untagged";
+                }
+            }
+
+            int ranIndex = Random.Range(0, UIManager.Ins.answerButtons.Length);
+
+            if (UIManager.Ins.answerButtons[ranIndex] != null)
+            {
+                UIManager.Ins.answerButtons[ranIndex].btnComp.tag = "RightAnswer";
+            }
+        }
+    }
+
+    public void SetQuestionText(string content)
+    {
+        if (UIManager.Ins.questionText)
+        {
+            UIManager.Ins.questionText.text = content;
+        }
+    }
+
+    /*
      * Hàm kiểm tra câu trả lời.
      */
     public void CheckAnswer(AnswerButton answerButton)
     {
         if (answerButton.btnComp.tag == "RightAnswer")
         {
-            GameController.ins.score += 10;
+            GameController.Ins.score += 10;
 
             /*-----Luu thong tin gameplay-----------*/
             if (PlayerPrefs.GetFloat("score") == 0 && PlayerPrefs.GetFloat("timePlay") == 0)
             {
-                PlayerPrefs.SetFloat("score", GameController.ins.score);
-                PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
+                PlayerPrefs.SetFloat("score", GameController.Ins.score);
+                PlayerPrefs.SetFloat("timePlay", TimeController.Ins.time);
                 isNewRecord = true;
-                //Debug.Log("begin score: " + PlayerPrefs.GetFloat("score"));
-                //Debug.Log("begin timePlay: " + PlayerPrefs.GetFloat("timePlay"));
             }
             else
             {
-                if (GameController.ins.score > PlayerPrefs.GetFloat("score"))
+                if (GameController.Ins.score > PlayerPrefs.GetFloat("score"))
                 {
-                    //Debug.Log("score: after > before");
-                    //Debug.Log("Before score: " + PlayerPrefs.GetFloat("score"));
-                    //Debug.Log("After score: " + GameController.ins.score);
-                    //Debug.Log("Before score: " + PlayerPrefs.GetFloat("timePlay"));
-                    //Debug.Log("After score: " + TimeController.ins.time);
-                    PlayerPrefs.SetFloat("score", GameController.ins.score);
-                    PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
+                    PlayerPrefs.SetFloat("score", GameController.Ins.score);
+                    PlayerPrefs.SetFloat("timePlay", TimeController.Ins.time);
                     isNewRecord = true;
                 }
-                else if (GameController.ins.score == PlayerPrefs.GetFloat("score"))
+                else if (GameController.Ins.score == PlayerPrefs.GetFloat("score"))
                 {
-                    //Debug.Log("score: after == before");
-                    //Debug.Log("Before score: " + PlayerPrefs.GetFloat("score"));
-                    //Debug.Log("After score: " + GameController.ins.score);
-                    if (TimeController.ins.time < PlayerPrefs.GetFloat("timePlay"))
+                    if (TimeController.Ins.time < PlayerPrefs.GetFloat("timePlay"))
                     {
-                        //Debug.Log("Before score: " + PlayerPrefs.GetFloat("timePlay"));
-                        //Debug.Log("After score: " + TimeController.ins.time);
-                        PlayerPrefs.SetFloat("timePlay", TimeController.ins.time);
+                        PlayerPrefs.SetFloat("timePlay", TimeController.Ins.time);
                         isNewRecord = true;
                     }
                 }
@@ -163,7 +190,7 @@ public class QuestionManager : MonoBehaviour
             PlayerPrefs.Save();
             /*--------------------------------------------*/
 
-            if (++rigrtAnswerCount > countQuestions)
+            if (++rigrtAnswerCount >= countQuestions)
             {
                 AudioController.Ins.PlayWinSound();
                 AudioController.Ins.StopMusic();
@@ -173,6 +200,7 @@ public class QuestionManager : MonoBehaviour
             }
             else
             {
+                Debug.Log(rigrtAnswerCount);
                 AudioController.Ins.PlayRightSound();
                 CreateQuestion();
             }
@@ -180,7 +208,10 @@ public class QuestionManager : MonoBehaviour
         else
         {
             AudioController.Ins.StopMusic();
-            AudioController.Ins.PlayLoseSound();
+            if (isNewRecord)
+                AudioController.Ins.PlayWinSound();
+            else
+                AudioController.Ins.PlayLoseSound();
             Time.timeScale = 0f; //Để dừng trò chơi, đơn giản ta chỉ cần set timeScale = 0
             UIManager.Ins.ShowDialogEndGame();
         }

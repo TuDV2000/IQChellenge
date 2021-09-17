@@ -14,7 +14,7 @@ public class MenuLevelManager : MonoBehaviour
 
     private void Start()
     {
-        TimeController.ins.enabled = false;
+        TimeController.Ins.enabled = false;
     }
 
     public void Mode()
@@ -29,7 +29,7 @@ public class MenuLevelManager : MonoBehaviour
     void Load()
     {
         QuestionManager.Ins.CreateQuestion();
-        TimeController.ins.enabled = true;
+        TimeController.Ins.enabled = true;
     }
 
     public void MakeSingleton()
