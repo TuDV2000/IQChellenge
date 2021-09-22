@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using Firebase;
 using Firebase.Database;
+using Firebase.Extensions;
 
 public class QuestionManager : MonoBehaviour
 {
@@ -15,41 +13,88 @@ public class QuestionManager : MonoBehaviour
     int rigrtAnswerCount = 0;    
     int countQuestions = 0;
 
+    DatabaseReference databaseRef;
+
     private void Awake() 
     {
         MakeSingleton();
+        //databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+        databaseRef = FirebaseDatabase.DefaultInstance.GetReference("questions");
     }
 
     private void Start()
     {
-        if (listQuestions.Count == 0) 
-            GameController.Ins.mDatabaseRef.ValueChanged += LoadQuestionDatas;
-        else
-            GameController.Ins.mDatabaseRef.ValueChanged -= LoadQuestionDatas;
+        //if (listQuestions.Count == 0) 
+        //    GameController.Ins.mDatabaseRef.ValueChanged += LoadQuestionDatas;
+        //else
+        //    GameController.Ins.mDatabaseRef.ValueChanged -= LoadQuestionDatas;
+        if (listQuestions.Count == 0)
+            LoadQuestionDatas();
     }
 
     /*
      * Hàm lấy danh sách câu hỏi từ database trên cloud firebase.
      */
-    private void LoadQuestionDatas(object sender, ValueChangedEventArgs e)
+    //private void LoadQuestionDatas(object sender, ValueChangedEventArgs e)
+    //{
+    //    if (e.DatabaseError != null)
+    //    {
+    //        Debug.LogError(e.DatabaseError.Message);
+    //        return;
+    //    }
+    //    foreach (DataSnapshot dsQuestions in e.Snapshot.Child("questions").Children)
+    //    {
+    //        QuestionData q = new QuestionData();
+    //        Debug.Log("abcacac");
+    //        Debug.Log(dsQuestions.Child("content").Value);
+    //        q.content = dsQuestions.Child("content").Value.ToString();
+    //        q.rightAnswer = dsQuestions.Child("rightAnswer").Value.ToString();
+    //        foreach (DataSnapshot dsWrongAnswer in dsQuestions.Child("wrongAnswers").Children)
+    //        {
+    //            q.wrongAnswers.Add(dsWrongAnswer.Value.ToString());
+    //        }
+    //        listQuestions.Add(q);
+    //    }
+    //    countQuestions = listQuestions.Count;
+    //}
+    private void LoadQuestionDatas()
     {
-        if (e.DatabaseError != null)
+        //GameController.Ins.mDatabaseRef.GetValueAsync().ContinueWithOnMainThread(task =>
+        databaseRef.GetValueAsync().ContinueWithOnMainThread(task =>
         {
-            Debug.LogError(e.DatabaseError.Message);
-            return;
-        }
-        foreach (DataSnapshot dsQuestions in e.Snapshot.Child("questions").Children)
-        {
-            QuestionData q = new QuestionData();
-            q.content = dsQuestions.Child("content").Value.ToString();
-            q.rightAnswer = dsQuestions.Child("rightAnswer").Value.ToString();
-            foreach (DataSnapshot dsWrongAnswer in dsQuestions.Child("wrongAnswers").Children)
-            {
-                q.wrongAnswers.Add(dsWrongAnswer.Value.ToString());
-            }
-            listQuestions.Add(q);
-        }
-        countQuestions = listQuestions.Count;
+             try
+             {
+                 if (task.IsFaulted)
+                 {
+                     Debug.Log("Error firebase get value");
+                 }
+                 else if (task.IsCompleted)
+                 {
+                     //UIManager.Ins.questionText.text = "rdtfgyhuj";
+                     DataSnapshot snapshot = task.Result;
+                    //foreach (DataSnapshot dsQuestions in snapshot.Child("questions").Children)
+                    foreach (DataSnapshot dsQuestions in snapshot.Children)
+                    {
+                         //Debug.Log(dsQuestions.Child("content").Value);
+                         QuestionData q = new QuestionData();
+                         q.content = dsQuestions.Child("content").Value.ToString();
+                         q.rightAnswer = dsQuestions.Child("rightAnswer").Value.ToString();
+                         foreach (DataSnapshot dsWrongAnswer in dsQuestions.Child("wrongAnswers").Children)
+                         {
+                             q.wrongAnswers.Add(dsWrongAnswer.Value.ToString());
+                         }
+                         listQuestions.Add(q);
+                     }
+                     countQuestions = listQuestions.Count;
+                 }
+             }
+             catch (System.Exception e)
+             {
+                 Debug.Log(e.StackTrace);
+                 Debug.Log(e.Message);
+             }
+         });
+        //UIManager.Ins.answerButtons[0].answerText.text = listQuestions.Count.ToString();
     }
 
     /*

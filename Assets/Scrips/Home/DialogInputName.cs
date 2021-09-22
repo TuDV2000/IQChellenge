@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Firebase.Database;
-using System;
 
 public class DialogInputName : MonoBehaviour
 {
@@ -28,6 +24,7 @@ public class DialogInputName : MonoBehaviour
         PlayerData player = new PlayerData(nameText.text);
         if (player.CheckPlayer(PlayerManager.Ins.listPlayer))
         {
+            notificationText.text = "Tên đã được sử dụng";
             notificationText.gameObject.SetActive(true);
         }
         else
@@ -41,7 +38,8 @@ public class DialogInputName : MonoBehaviour
 
     public void HideNotification()
     {
-        notificationText.gameObject.SetActive(false);
+        if (notificationText.gameObject.activeInHierarchy)
+            notificationText.gameObject.SetActive(false);
     }
 
     public void MakeSingleton()

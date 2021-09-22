@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Linq;
-using Firebase.Database;
 
 public class DialogEndGame : MonoBehaviour
 {
@@ -48,8 +44,8 @@ public class DialogEndGame : MonoBehaviour
 
             string json = JsonUtility.ToJson(player);
 
-            GameController.Ins.mDatabaseRef.ValueChanged -= PlayerManager.Ins.LoadPlayerDatas;
-            GameController.Ins.mDatabaseRef.Child("players").Child(player.name).SetRawJsonValueAsync(json);
+            //GameController.Ins.mDatabaseRef.ValueChanged -= PlayerManager.Ins.LoadPlayerDatas;
+            GameController.Ins.mDatabaseRef.Child("players").Push().SetRawJsonValueAsync(json);
         }
 
         scoreText.text = GameController.Ins.score.ToString();
