@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - RightAnswer
+  - RightAnswer1
+  - RightAnswer2
+  - WrongAnswer1
+  - WrongAnswer2
   layers:
   - Default
   - TransparentFX

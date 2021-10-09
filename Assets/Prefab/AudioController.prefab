@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1567780034365600259}
   - component: {fileID: 1567780034365600256}
   - component: {fileID: 1567780034365600257}
+  - component: {fileID: 556962558}
   m_Layer: 0
   m_Name: AudioController
   m_TagString: Untagged
@@ -55,8 +56,6 @@ MonoBehaviour:
   rightSound: {fileID: 8300000, guid: 2de02acdbe85d4e4bb68ae589912d79d, type: 3}
   winSound: {fileID: 8300000, guid: f61871a19cb203c42b202fbccbfa1ca9, type: 3}
   loseSound: {fileID: 8300000, guid: c3f3f9256c5c7744699a5decc772a310, type: 3}
-  musicSlider: {fileID: 0}
-  soundSlider: {fileID: 0}
 --- !u!82 &1567780034365600256
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66,7 +65,8 @@ AudioSource:
   m_GameObject: {fileID: 1567780034365600318}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 92b944b0720a4d34f893f5935a1c8033,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -162,7 +162,8 @@ AudioSource:
   m_GameObject: {fileID: 1567780034365600318}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 92b944b0720a4d34f893f5935a1c8033,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -249,3 +250,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &556962558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567780034365600318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697ceb77f16e0644989159047b7a86ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 92b944b0720a4d34f893f5935a1c8033, type: 2}
+  slider: {fileID: 0}

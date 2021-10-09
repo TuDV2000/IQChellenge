@@ -4,9 +4,10 @@ using System.Collections.Generic;
 [System.Serializable]
 public class PlayerData : IComparable<PlayerData>
 {
+    public string id;
     public string name;
-    public string score;
-    public string timePlay;
+    public float score;
+    public float timePlay;
 
     public PlayerData() { }
 
@@ -15,8 +16,16 @@ public class PlayerData : IComparable<PlayerData>
         this.name = name;
     }
 
-    public PlayerData(string name, string score, string timePlay)
+    public PlayerData(string name, float score, float timePlay)
     {
+        this.name = name;
+        this.score = score;
+        this.timePlay = timePlay;
+    }
+
+    public PlayerData(string id, string name, float score, float timePlay)
+    {
+        this.id = id;
         this.name = name;
         this.score = score;
         this.timePlay = timePlay;
@@ -44,7 +53,7 @@ public class PlayerData : IComparable<PlayerData>
         return null;
     }
 
-    public void UpdateRecord(string score, string timePlay)
+    public void UpdateRecord(float score, float timePlay)
     {
         this.score = score;
         this.timePlay = timePlay;
@@ -52,15 +61,15 @@ public class PlayerData : IComparable<PlayerData>
 
     public int CompareTo(PlayerData other)
     {
-        if (float.Parse(this.score) < float.Parse(other.score))
+        if (this.score < other.score)
             return 1;
-        else if (float.Parse(this.score) > float.Parse(other.score))
+        else if (this.score > other.score)
             return -1;
         else
         {
-            if (float.Parse(this.timePlay) > float.Parse(other.timePlay))
+            if (this.timePlay > other.timePlay)
                 return 1;
-            else if (float.Parse(this.timePlay) < float.Parse(other.timePlay))
+            else if (this.timePlay < other.timePlay)
                 return -1;
             else
                 return 0;

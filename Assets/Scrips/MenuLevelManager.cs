@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuLevelManager : MonoBehaviour
 {
@@ -14,25 +15,23 @@ public class MenuLevelManager : MonoBehaviour
         TimeController.Ins.enabled = false;
     }
 
-    public void Mode()
+    public void OnePlayerMode()
     {
         gameObject.SetActive(false);
         UIManager.Ins.qAP.SetActive(true);
         UIManager.Ins.pauseButton.gameObject.SetActive(true);
+        UIManager.Ins.waitScreen.gameObject.SetActive(true);
         Time.timeScale = 1f;
-        //StartCoroutine(Load());
-        //if (QuestionManager.Ins.listQuestions.Count == 0)
-        //{
-        //    Invoke("Load", 2f);
-        //    UIManager.Ins.questionText.text = "Khong load duoc cau hoi! loi roi";
-        //}
-        //else
-        //    Load();
-        Invoke("Load", 2f);
-
+        //Load();
+        //Invoke("Load", 2f);
     }
 
-    void Load()
+    public void TwoPlayerMode()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void Load()
     {
         //yield return new WaitForSeconds(2f);
         //UIManager.Ins.questionText.text = "Khong load duoc cau hoi! loi roi";

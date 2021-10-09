@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public DialogRank dialogRank;
     public Canvas canvas;
     public Button pauseButton;
+    public WaitScreen waitScreen;
 
     private void Awake()
     {

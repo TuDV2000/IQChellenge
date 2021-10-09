@@ -21,13 +21,13 @@ public class DialogRank : MonoBehaviour
                 if (i < max)
                 {
                     rankLists[i].SetText(i + 1, PlayerManager.Ins.listPlayer[i].name,
-                        PlayerManager.Ins.listPlayer[i].score);
+                        PlayerManager.Ins.listPlayer[i].score.ToString());
                 }
 
                 if (PlayerManager.Ins.listPlayer[i].name.Equals(PlayerPrefs.GetString("name")))
                 {
                     currentRank.SetText(i + 1, PlayerManager.Ins.listPlayer[i].name,
-                        PlayerManager.Ins.listPlayer[i].score);
+                        PlayerManager.Ins.listPlayer[i].score.ToString());
                     if (i >= max)
                         break;
                 }

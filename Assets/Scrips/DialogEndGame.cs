@@ -28,24 +28,26 @@ public class DialogEndGame : MonoBehaviour
 
             PlayerData player = PlayerData.getPlayerByName(PlayerManager.Ins.listPlayer
                 , PlayerPrefs.GetString("name"));
+            string json;
 
             if (player == null)
             {
                 player = new PlayerData(PlayerPrefs.GetString("name")
-                    , PlayerPrefs.GetFloat("score").ToString()
-                    , PlayerPrefs.GetFloat("timePlay").ToString());
+                    , PlayerPrefs.GetFloat("score")
+                    , PlayerPrefs.GetFloat("timePlay"));
                 PlayerManager.Ins.listPlayer.Add(player);
+                json = JsonUtility.ToJson(player);
+                GameController.Ins.mDatabaseRef.Child("players").Push().SetRawJsonValueAsync(json);
             }
             else
             {
-                player.UpdateRecord(PlayerPrefs.GetFloat("score").ToString()
-                    , PlayerPrefs.GetFloat("timePlay").ToString());
+                player.UpdateRecord(PlayerPrefs.GetFloat("score")
+                    , PlayerPrefs.GetFloat("timePlay"));
+                json = JsonUtility.ToJson(player);
+                GameController.Ins.mDatabaseRef.Child("players").Child(player.id).SetRawJsonValueAsync(json);
             }
-
-            string json = JsonUtility.ToJson(player);
-
             //GameController.Ins.mDatabaseRef.ValueChanged -= PlayerManager.Ins.LoadPlayerDatas;
-            GameController.Ins.mDatabaseRef.Child("players").Push().SetRawJsonValueAsync(json);
+            //GameController.Ins.mDatabaseRef.Child("players").Push().SetRawJsonValueAsync(json);
         }
 
         scoreText.text = GameController.Ins.score.ToString();

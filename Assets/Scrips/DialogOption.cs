@@ -19,6 +19,7 @@ public class DialogOption : MonoBehaviour
     public void DoneSetting()
     {
         gameObject.SetActive(false);
+        Time.timeScale = 1f;
         if (UIManager.Ins != null)
             UIManager.Ins.pauseButton.gameObject.SetActive(true);
     }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Firebase.Database;
+using System.Collections.Generic;
 
 public class UIHomeManager : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class UIHomeManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
-
 
     public void MakeSingleton()
     {

@@ -66,14 +66,13 @@ public class PlayerManager : MonoBehaviour
             else if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
+
                 //foreach (DataSnapshot dsPlayers in snapshot.Child("players").Children)
                 foreach (DataSnapshot dsPlayers in snapshot.Children)
                 {
-                    Debug.Log(dsPlayers.Child("name"));
-
-                    listPlayer.Add(new PlayerData(dsPlayers.Child("name").Value.ToString()
-                        , dsPlayers.Child("score").Value.ToString()
-                        , dsPlayers.Child("timePlay").Value.ToString()));
+                    listPlayer.Add(new PlayerData(dsPlayers.Key, dsPlayers.Child("name").Value.ToString()
+                        , float.Parse(dsPlayers.Child("score").Value.ToString())
+                        , float.Parse(dsPlayers.Child("timePlay").Value.ToString())));
                 }
             }
         });
